@@ -1,0 +1,9 @@
+Type,Value,Tag
+A,100,"System  in MAN"
+A,101,"System  in AUTO"
+A,102,"MAN Pump Run Cmd"
+A,103,"Low Level Alarm"
+A,104,"High Level Alarm"
+A,105,"Low Lvl Float"
+A,106,"High Lvl Float"
+A,5,"Pump Call to Run"

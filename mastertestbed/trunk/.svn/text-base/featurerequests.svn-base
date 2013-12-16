@@ -1,0 +1,52 @@
+# vim: tw=80
+##Feature Requests
+-- Implement more interface features for the vdevs and add an interface for the
+simulator
+
+-- Any time a point is written, it should be journaled. Journals could be a flat file, a pickle, or probably best a SQLite store.
+
+-- Protocol interfaces: DNP3, Rockwell
+
+-- Investigate refactoring the configuration files. "Flat is better than nested"
+
+-- More robust unit tests for the ICS interfaces.
+
+-- Add callbacks to the ics servers/clients to allow for overriding the default
+behavior of point requests. This is how PLC's handle this behavior, and it would
+let us model things like encrypting the lines.
+
+-- The simulator communication interface needs some documentation.
+
+-- The simulator needs an interface like the vdev has, and the vdev interface
+needs more functionality. Pretty printing points, device status, configuration,
+etc.
+
+-- Implement logging errors in place of printing error messages to the console
+
+-- vdev.py should be turned into a class so that configuration files and other
+information isn't having to be passed into process control logic, etc...
+
+-- The ICSClientFactory, instead of depending on indexes for both client and
+server, should take a protocol type and an index. This would allow it to create
+the first, second, etc.. "ModbusTCP" interfaces, for example.
+
+-- ifaces.py needs more ifaces completed -- only UDP is not sufficient
+
+-- Presently, it is assumed that simulator names and point names are identical.
+This is not a good assumption, especially for large systems where many vdevs may
+be measuring the same quantity. This should be
+handled by either adding a "simname" field to the points or by defining a map in
+the configuration. The former would probably be easier. 
+
+-- Currently, points are only aware of one data-type(float), specified by the modbus
+parameters. Support for shorts, ints, and doubles should be added.
+
+-- When catching master modbus errors in vdevs, it would be better to include details about
+which interface failed.
+
+--Individual simulators should subclass a "Simulator" class instead of
+implementing most of the important methods themselved.
+
+-- Instead of modifying points in place, vdev proclogic methods should take
+points as input, and return points as outputs. This would allow process logic to
+be written as coroutines

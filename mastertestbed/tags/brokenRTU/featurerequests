@@ -1,0 +1,30 @@
+# vim: tw=80
+##Feature Requests
+-- Implement more interface features for the vdevs and add an interface for the
+simulator
+
+-- Any time a point is written, it should be journaled. Journals could be a flat file, a pickle, or probably best a SQLite store.
+
+-- Protocol interfaces: DNP3, Rockwell
+
+-- Investigate refactoring the configuration files. "Flat is better than nested"
+
+-- More robust unit tests for the ICS interfaces.
+
+-- Add callbacks to the ics servers/clients to allow for overriding the default
+behavior of point requests. This is how PLC's handle this behavior, and it would
+let us model things like encrypting the lines.
+
+-- The simulator communication interface needs some documentation.
+
+-- The simulator needs an interface like the vdev has, and the vdev interface
+needs more functionality. Pretty printing points, device status, configuration,
+etc.
+
+-- Virtual devices and the simulator need to be invoked with command line
+options indicating which simulation and device to invoke
+
+-- Implement logging errors in place of printing error messages to the console
+
+-- vdev.py should be turned into a class so that configuration files and other
+information isn't having to be passed into process control logic, etc...

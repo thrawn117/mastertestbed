@@ -1,0 +1,15 @@
+# vim: tw=80
+## Bugs in project
+
+-- Point access is probably not thread safe. To fix this, each point object 
+should have a lock object; when get() or set() is called, the call waits on the
+lock before the read or write occurs.
+
+-- The virtual devices don't handle errors gracefully.
+
+-- The solenoid in the rtu pipe system doesn't have any delay from signal to
+actuation. I.e. it opens immediately. Need to add a delay of about .5 seconds
+for that to take effect.
+
+-- The loop that runs proclogic has time determined by several different
+factors. This works _right now_ but may cause issues in the future.

@@ -1,0 +1,38 @@
+# vim: tw=80
+## Bugs in project
+
+-- Point access is probably not thread safe. To fix this, each point object 
+should have a lock object; when get() or set() is called, the call waits on the
+lock before the read or write occurs.
+
+-- The virtual devices don't handle errors gracefully.
+
+-- The virtual device threads can't be signaled to cleanly exit 
+
+-- Modbus RTU clients can't successfully poll a slave device. A branch has been
+created that holds the code at the final stage of debugging. Several things
+were done to the code to try to figure out where the bug is -- these have been
+reversed in the trunk version. These include removing the @thread_safe
+decorator, adding try-catch blocks, around some code, fixes for the EAGAIN error
+when writing to the port(discussed below) and adding lots of print
+and logger messages. Adding delays, especially in the timeout, helps, but does
+not solve the problem below. In spite of all efforts, the error couldn't be found. 
+
+The workflow to duplicate the errors is the following:
+1) Start a simulator instance
+2) Start a port_logger instance (to create the PTY serial ports)
+3) Start a slave vdev instance
+4) Start a master vdev instance
+
+The errors include the following: 
+A) When a master unit attempts to send a packet, it will fail with an OSError
+exception errno 11: EAGAIN. Adding a try...except block to try again with this
+error seems to fix this. 
+B) In the serial port, the string 0x8004 is sent repeatedly after the first
+request by the master and slave while the master is running. This may be dropped
+inside the serial port code, but it is unclear where or why this string appears.
+C) If a master sends a request successfully, the slave sends a response,
+according to the serial port logs. From there, if issues A and B are corrected
+for, the master will close with an InvalidResponse exception; the claimed
+response length is either 0 or 2 -- no more. If two bytes are received those
+bytes are correct, but no more are parsed.

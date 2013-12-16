@@ -1,0 +1,12 @@
+This repository holds code and necessary data for the virtual testbeds.
+
+Directories:
+/analysis -- Holds scripts that analyze traffic captures and process similarity
+    /traces -- Holds packet captures of lab and sim systems
+/attacks -- Holds attack code used to test the virtual and laboratory testbeds
+/protolibs -- Holds the portlogger class, ics_server and ics_client classes, and              individual protocol codebases, and simulation ifaces
+/scripts -- Holds shell scripts used for running the testbed (run.sh) and
+            logging laboratory systems.
+/sims -- Holds information about individual testbed instances
+    /rtupipe -- pipeline configuration, simulation, and vdev programming
+    /rtuwater -- groundtank configuration, simulation, and vdev programming

@@ -1,0 +1,12 @@
+Type,Value,Tag
+A,100,"Control Pump/Sol"
+A,101,"System  In MAN"
+A,102,"System  In AUTO"
+A,103,"MAN Pump Run Cmd"
+A,104,"MAN Sol Open Cmd"
+A,5,"Pump Run Cmd"
+A,6,"Sol Run Cmd"
+A,105,"PID     Increase"
+A,106,"PID     Decrease"
+A,107,"AUT Pump Run Cmd"
+A,108,"AUT Sol Open Cmd"

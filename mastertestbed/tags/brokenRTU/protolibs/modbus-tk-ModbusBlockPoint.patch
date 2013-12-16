@@ -1,0 +1,62 @@
+# HG changeset patch
+# User Brad Reaves <bgr39@ece.msstate.edu>
+# Date 1300895527 18000
+# Node ID b19526e0c6961006334ef90667a9a6c832bc6b65
+# Parent  2cd249334f5e988801f33536c9ec65f241a1645c
+Modified the ModbusBlock class so that Point class objects can be stored in the block and updated by the rest of the modbus-tk project
+
+diff -r 2cd249334f5e -r b19526e0c696 modbus_tk/modbus.py
+--- a/modbus_tk/modbus.py	Thu Mar 03 18:18:05 2011 +0100
++++ b/modbus_tk/modbus.py	Wed Mar 23 10:52:07 2011 -0500
+@@ -386,12 +386,49 @@
+     
+     def __getitem__(self, r):
+         """"""
+-        return self._data.__getitem__(r)
++        #BRFIX: Ensure that we return a value if the block is storing a point
++        item = self._data.__getitem__(r)
++        #print "BRDEBUG: In __getitem__. item", item
++        try:
++            for cnt in range(len(item)):
++                if str(type(item[cnt])) == "<class 'point.Point'>":
++                    item[cnt] = item[cnt].get()        
++        except TypeError: #This happens if item isn't iterable
++            if str(type(item)) == "<class 'point.Point'>":
++                item = item.get()
++        #print "BRDEBUG: In __getitem__ . Returning: ", item
++        return item
+     
+     def __setitem__(self, r, v):
+         """"""
+         call_hooks("modbus.ModbusBlock.setitem", (self, r, v))
+-        return self._data.__setitem__(r, v)
++        ##We get a copy of the existing values that are about to change,
++        ##  implement the changes according to type, then put the new objects
++        ##  into the _data object
++        item = self._data.__getitem__(r)
++        try:
++            for cnt in range(len(item)):
++                if str(type(item[cnt])) == "<class 'point.Point'>":
++                    item[cnt] = item[cnt].set(v[cnt])        
++                else:
++                    item[cnt] = v[cnt]
++            return self._data.__setitem__(r, item)
++        except TypeError: #This happens if item isn't iterable:
++            if str(type(item)) == "<class 'point.Point'>":
++                item = item.set(v)
++            else:
++                #print "BRDEBUG: In __setitem__. About to do the default", type(item)
++                return self._data.__setitem__(r, v)
++        finally:
++            if hasattr(v,'__iter__') and (self.__getitem__(r) == list(v)):
++                pass
++            elif ((str(type(v)) == "<class 'point.Point'>") and 
++                 self.__getitem__(r) == v.get() ):
++                pass
++            elif self.__getitem__(r) != v:
++                raise Exception("Stored value %s not equal to %s" % 
++                                    (self.__getitem__(r), v) )
++
+     
+     
+ #-------------------------------------------------------------------------------

@@ -1,0 +1,36 @@
+[simiface]
+sport = 9912
+typ = 'udp'
+timeout = 0.1
+recipients = [('127.0.0.1', 9913)]
+[sim_state]
+pressure = 0
+pump = True
+valve = False
+simtime = 0
+[sim_constants]
+valve_rate = -2
+pump_rate = 1
+[vdevs]
+[[slave]]
+clientifaces = []
+name = 'slave'
+icsifaces = [{'name': 'Modbus', 'memory_model': 'control_microsystems', 'id': 1, 'address': '127.0.0.1', 'typ': 'ModbusTCP', 'port': 502}]
+points = [{'typ': 2, 'name': 'pump', 'value': False, 'metadata': {'modbus': {'blocktype': 1, 'addr': '10', 'blockname': 'coil'}, 'dnp3': {}}}, {'typ': 2, 'name': 'valve', 'value': False, 'metadata': {'modbus': {'blocktype': 1, 'addr': '11', 'blockname': 'coil'}, 'dnp3': {}}}, {'typ': 1, 'name': 'pressure', 'value': 17.0, 'metadata': {'modbus': {'datatype': 'float', 'blocktype': 4, 'addr': '30002', 'blockname': 'inputreg'}, 'dnp3': {}}}, {'typ': 0, 'name': 'setpoint', 'value': 15.0, 'metadata': {'modbus': {'datatype': 'float', 'blocktype': 3, 'addr': '40003', 'blockname': 'holdingreg'}, 'dnp3': {}}}]
+timeout = 0.1
+id = 1
+[[[simiface]]]
+sport = 9913
+typ = 'udp'
+timeout = 0.1
+recipients = [('127.0.0.1', 9912)]
+[[master]]
+clientifaces = [{'name': 'Modbus', 'memory_model': 'control_microsystems', 'id': 1, 'address': '127.0.0.1', 'typ': 'ModbusTCP', 'port': 502}]
+name = 'master'
+icsifaces = []
+points = [{'typ': 2, 'name': 'pump', 'value': False, 'metadata': {'modbus': {'blocktype': 1, 'addr': '10', 'blockname': 'coil'}, 'dnp3': {}}}, {'typ': 2, 'name': 'valve', 'value': False, 'metadata': {'modbus': {'blocktype': 1, 'addr': '11', 'blockname': 'coil'}, 'dnp3': {}}}, {'typ': 1, 'name': 'pressure', 'value': 0, 'metadata': {'modbus': {'blocktype': 4, 'addr': '30002', 'blockname': 'inputreg'}, 'dnp3': {}}}, {'typ': 0, 'name': 'setpoint', 'value': 0, 'metadata': {'modbus': {'blocktype': 3, 'addr': '40003', 'blockname': 'holdingreg'}, 'dnp3': {}}}]
+timeout = 0.1
+id = 0
+[[[simiface]]]
+typ = 'virtual'
+timeout = 0.1

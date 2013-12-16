@@ -1,0 +1,8 @@
+Port Logger Log: Unix time: 1306431892.3
+Ports in use: /dev/pts/5 /dev/ttyUSB0
+Format : <Timestamp (Unix time)> : <port file name> : <packet> 
+
+1306431893.741503 : /dev/ttyUSB0 : 07.10.0b.e9.00.0a.14.00.02.00.01.00.00.00.00.00.00.00.00.00.1e.00.32.00.3c.00.5a.fd.c6
+1306431893.748874 : /dev/pts/5 : 5e.47.5e.50.5e.4b.e9.5e.40.0d.0a.5e.54.5e.40.5e.42.5e.40.5e.41.5e.40.5e.40.5e.40.5e.40.5e.40.5e.40.5e.40.5e.40.5e.40.5e.5e.5e.40.32.5e.40.3c.5e.40.5a.fd.c6
+1306431903.777508 : /dev/ttyUSB0 : 07.03.0b.b7.00.0a.77.a9
+1306431903.784814 : /dev/pts/5 : 5e.47.5e.43.5e.4b.b7.5e.40.0d.0a.77.a9
